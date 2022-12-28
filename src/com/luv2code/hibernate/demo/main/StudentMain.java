@@ -22,14 +22,20 @@ public class StudentMain {
 		try {
 			//create object
 			System.out.println("1- Creating new student Objects");
-			Student student = new Student("Ahmed","San","amer@gmail");
+			Student student1 = new Student("Kareem","Fathy","Kareem@gmail");
+			Student student2 = new Student("Mohamed","Malek","Mohamed@gmail");
+			Student student3 = new Student("Saed","Tawfik","Saed@gmail");
+
 			
 			 //start transaction
 			session.beginTransaction();
 			System.out.println("2- Transaction begin");
 			
 			// save object
-			session.save(student);
+			session.save(student1);
+			session.save(student2);
+			session.save(student3);
+
 			System.out.println("3- Saving The Student");
 			
 			//commit transaction
