@@ -1,8 +1,5 @@
 package com.luv2code.hibernate.demo.main;
 
-import java.sql.Connection;
-import java.sql.DriverManager;
-
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
@@ -25,7 +22,7 @@ public class StudentMain {
 		try {
 			//create object
 			System.out.println("1- Creating new student Objects");
-			Student student = new Student("Ahmed","Saed","ahmed@gmail");
+			Student student = new Student("Ahmed","San","amer@gmail");
 			
 			 //start transaction
 			session.beginTransaction();
