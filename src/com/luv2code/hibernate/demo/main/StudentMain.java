@@ -30,15 +30,27 @@ public class StudentMain {
 
 		try {
 
+////		insert object to database
 //			Student student = new Student("Saed", "Amer", "Saed@gmail");
 //			saveToDatabase(student);
+			
+////		retrieve object from database			
 //			retrieveFromDatabase( student.getId());
-			String query1 ="from Student";
-			String query2 ="from Student where lastName='Osama'";
-			String query3 ="from Student where lastName='Amer' or firstName='Amer' ";
-			String query4 ="from Student where email like 'A%' ";
 
-			retrieveingQuery(query4);
+////		retrieve objects from database			
+//			String query ="from Student";
+//			String query ="from Student where lastName='Osama'";
+//			String query ="from Student where lastName='Amer' or firstName='Amer' ";
+//			String query ="from Student where email like 'A%' ";
+//			retrieveQuery(query);
+			
+////		Update object to database						
+//			Student student = new Student("Saed", "Amer", "Saed@gmail");
+//			updateFromDatabase(4,student);
+			
+////		Update objects to database						
+			String query ="update Student set email ='foo@gmail'";
+			updateQuery(query);
 			
 
 		} finally {
@@ -57,7 +69,7 @@ public class StudentMain {
 
 		// 2-save object
 		session.save(student);
-		System.out.println("2- Saving The Student");
+		System.out.println("2- Student Inserted");
 
 		// 3-commit transaction
 		session.getTransaction().commit();
@@ -66,7 +78,7 @@ public class StudentMain {
 
 	public static void retrieveFromDatabase(int id) {
 
-		Session session = factory.getCurrentSession();
+		session = factory.getCurrentSession();
 		// 1-start transaction
 		session.beginTransaction();
 		System.out.println("\n\n1- Transaction begin");
@@ -74,16 +86,37 @@ public class StudentMain {
 		// 2-retrieve object with id
 		Student student = session.get(Student.class, id);
 		System.out.println(student);
-		System.out.println("2- Retrieve the Student");
+		System.out.println("2- Student Retrieved");
+
+		// 3-commit transaction
+		session.getTransaction().commit();
+		System.out.println("3- Commit Transaction");
+	}
+	
+	public static void updateFromDatabase(int id,Student s) {
+
+		session = factory.getCurrentSession();
+		// 1-start transaction
+		session.beginTransaction();
+		System.out.println("\n\n1- Transaction begin");
+
+		// 2-update object with id
+		Student student = session.get(Student.class, id);
+		student.setFirstName(s.getFirstName());
+		student.setLastName(s.getLastName());
+		student.setEmail(s.getEmail());
+
+		System.out.println(student);
+		System.out.println("2- Student updated ");
 
 		// 3-commit transaction
 		session.getTransaction().commit();
 		System.out.println("3- Commit Transaction");
 	}
 
-	public static void retrieveingQuery(String query) {
+	public static void retrieveQuery(String query) {
 
-		Session session = factory.getCurrentSession();
+		session = factory.getCurrentSession();
 		// 1-start transaction
 		session.beginTransaction();
 		System.out.println("\n\n1- Transaction begin");
@@ -92,7 +125,23 @@ public class StudentMain {
 		List<Student> students = session.createQuery(query).list();
 		//students.forEach(x->System.out.println(x));
 		students.forEach(System.out::println);
-		System.out.println("2- Retrieve the Student");
+		System.out.println("2- Student Retrieved");
+
+		// 3-commit transaction
+		session.getTransaction().commit();
+		System.out.println("3- Commit Transaction");
+	}
+	
+	public static void updateQuery(String query) {
+
+		session = factory.getCurrentSession();
+		// 1-start transaction
+		session.beginTransaction();
+		System.out.println("\n\n1- Transaction begin");
+
+		// 2-retrieve object with id
+		session.createQuery(query).executeUpdate();
+		System.out.println("2- Student updated");
 
 		// 3-commit transaction
 		session.getTransaction().commit();
