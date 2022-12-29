@@ -1,5 +1,7 @@
 package com.luv2code.hibernate.demo.main;
 
+import java.util.List;
+
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
@@ -29,13 +31,14 @@ public class StudentMain {
 		try {
 
 			Student student = new Student("Amer", "Osama", "Amer@gmail");
-
-			saveToDatabase(student);
-			retrieveFromDatabase( student.getId());
+//			saveToDatabase(student);
+//			retrieveFromDatabase( student.getId());
+			retrieveingQuery("from Student");
+			
 
 		} finally {
-			factory.close();
-			session.close();
+			session=null;
+			factory=null;
 		}
 
 	}
@@ -72,4 +75,23 @@ public class StudentMain {
 		session.getTransaction().commit();
 		System.out.println("3- Commit Transaction");
 	}
+
+	public static void retrieveingQuery(String query) {
+
+		Session session = factory.getCurrentSession();
+		// 1-start transaction
+		session.beginTransaction();
+		System.out.println("\n\n1- Transaction begin");
+
+		// 2-retrieve object with id
+		List<Student> students = session.createQuery(query).list();
+		//students.forEach(x->System.out.println(x));
+		students.forEach(System.out::println);
+		System.out.println("2- Retrieve the Student");
+
+		// 3-commit transaction
+		session.getTransaction().commit();
+		System.out.println("3- Commit Transaction");
+	}
+
 }
