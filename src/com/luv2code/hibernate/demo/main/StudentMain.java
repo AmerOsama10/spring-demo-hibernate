@@ -30,10 +30,15 @@ public class StudentMain {
 
 		try {
 
-			Student student = new Student("Amer", "Osama", "Amer@gmail");
+//			Student student = new Student("Saed", "Amer", "Saed@gmail");
 //			saveToDatabase(student);
 //			retrieveFromDatabase( student.getId());
-			retrieveingQuery("from Student");
+			String query1 ="from Student";
+			String query2 ="from Student where lastName='Osama'";
+			String query3 ="from Student where lastName='Amer' or firstName='Amer' ";
+			String query4 ="from Student where email like 'A%' ";
+
+			retrieveingQuery(query4);
 			
 
 		} finally {
