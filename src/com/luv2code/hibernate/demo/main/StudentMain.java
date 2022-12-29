@@ -30,27 +30,34 @@ public class StudentMain {
 
 		try {
 
-////		insert object to database
+////		1-insert object to database
 //			Student student = new Student("Saed", "Amer", "Saed@gmail");
 //			saveToDatabase(student);
-			
-////		retrieve object from database			
+//			
+////		2-retrieve object from database			
 //			retrieveFromDatabase( student.getId());
-
-////		retrieve objects from database			
+//
+////		2-retrieve objects from database			
 //			String query ="from Student";
 //			String query ="from Student where lastName='Osama'";
 //			String query ="from Student where lastName='Amer' or firstName='Amer' ";
 //			String query ="from Student where email like 'A%' ";
-//			retrieveQuery(query);
-			
-////		Update object to database						
+//			Query(query,"retrieved");
+//			
+////		3-Update object to database						
 //			Student student = new Student("Saed", "Amer", "Saed@gmail");
 //			updateFromDatabase(4,student);
-			
-////		Update objects to database						
-			String query ="update Student set email ='foo@gmail'";
-			updateQuery(query);
+//			
+////		3-Update objects to database						
+//			String query ="update Student set lastName='Ahmed' where id=5";
+//			Query(query,"updated");
+//			
+////		4-delete object to database						
+			deleteFromDatabase(2);
+//			
+////		4-delete object from database						
+//			String query ="delete Student where id=3";
+//			Query(query,"deleted");
 			
 
 		} finally {
@@ -114,6 +121,24 @@ public class StudentMain {
 		System.out.println("3- Commit Transaction");
 	}
 
+	
+	public static void deleteFromDatabase(int id) {
+
+		session = factory.getCurrentSession();
+		// 1-start transaction
+		session.beginTransaction();
+		System.out.println("\n\n1- Transaction begin");
+
+		// 2-update object with id
+		Student student = session.get(Student.class, id);
+		session.delete(student);
+		System.out.println("2- Student deleted ");
+
+		// 3-commit transaction
+		session.getTransaction().commit();
+		System.out.println("3- Commit Transaction");
+	}
+	
 	public static void retrieveQuery(String query) {
 
 		session = factory.getCurrentSession();
@@ -132,7 +157,8 @@ public class StudentMain {
 		System.out.println("3- Commit Transaction");
 	}
 	
-	public static void updateQuery(String query) {
+	
+	public static void Query(String query,String message) {
 
 		session = factory.getCurrentSession();
 		// 1-start transaction
@@ -141,11 +167,13 @@ public class StudentMain {
 
 		// 2-retrieve object with id
 		session.createQuery(query).executeUpdate();
-		System.out.println("2- Student updated");
+		System.out.println("2- Student "+message);
 
 		// 3-commit transaction
 		session.getTransaction().commit();
 		System.out.println("3- Commit Transaction");
 	}
+	
+
 
 }
